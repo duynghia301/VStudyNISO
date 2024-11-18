@@ -1,6 +1,14 @@
+import { UserButton } from "@clerk/nextjs";
+
 const Haga = () => {
     return (  
-        <div>tessssss</div>
+        <div>
+        <UserButton
+        afterSwitchSessionUrl="/"
+        />
+      
+
+      </div>
     );
 }
  
