@@ -1,9 +1,9 @@
-import Breadcrumb from "@/app/components/Common/Breadcrumb";
-import NotFound from "@/app/components/NotFound";
+import Breadcrumb from "@/components/Common/Breadcrumb";
+import NotFound from "@/components/NotFound";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "404 Page | Play SaaS Starter Kit and Boilerplate for Next.js",
+  title: "404 Page | Lỗi không tìm thấy",
 };
 
 const ErrorPage = () => {

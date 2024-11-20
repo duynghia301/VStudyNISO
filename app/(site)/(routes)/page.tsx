@@ -1,18 +1,23 @@
 import { UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "@/components/themebutton";
-const Haga = () => {
+const Dashboard = () => {
     return (  
-      <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body>
+   
+      <div className="header">
+    
+     
+    <body>
           <UserButton></UserButton>
           <div><ModeToggle></ModeToggle></div>
           
         </body>
-      </html>
-    </>
+  
+   
+    </div>
+       
+   
+ 
     );
 }
  
-export default Haga;
+export default Dashboard;
