@@ -6,10 +6,16 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+	"./styles/**/*.{css}"
   ],
   theme: {
   	extend: {
   		colors: {
+
+			dark: "#333333",
+
+			"body-color": "hsl(var(--body-color))",
+			"dark-6": "hsl(var(--dark-6))",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

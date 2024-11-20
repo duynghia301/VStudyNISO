@@ -1,6 +1,7 @@
 import { TeamType } from "@/app/types/team";
 import SectionTitle from "../Common/SectionTitle";
 import SingleTeam from "./SingleTeam";
+import "@/styles/index.css";
 
 const teamData: TeamType[] = [
   {

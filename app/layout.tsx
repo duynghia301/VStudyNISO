@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import NotFound from "@/components/NotFound";
+import {ClerkProvider } from "@clerk/nextjs";
+import "../styles/index.css";
+import "../styles/prism-vsc-dark-plus.css";
+import { ThemeProvider } from "next-themes";
+import { cn } from "@/lib/utils";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,15 +28,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <ClerkProvider>
-      <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        
-      > 
+      <html suppressHydrationWarning={true} className="!scroll-smooth" lang="en">
+      <head />
+      <body className={cn("bg-white dark:bg-[#313338]")}> 
+       
+          <ThemeProvider
+            attribute="class"
+            enableSystem={true}
+            defaultTheme="light"
+            storageKey="VStudy-theme"
+          >
+      
         {children}
+        </ThemeProvider>
+      
       </body>
+      <head/>
     </html>
     </ClerkProvider>
     

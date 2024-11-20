@@ -1,10 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
-import Header from "../Header";
-import About from "../About";
+import Header from "@/components/Header";
+import About from "@/components/About";
 import Contact from "../Contact";
-import Clients from "../Clients";
 import Footer from "../Footer";
+import Team from "../Team";
 
 const Hero = () => {
   return (
@@ -33,7 +32,7 @@ const Hero = () => {
                   <li>
            
                     <Link
-                      href="test"
+                      href="sign-in"
                       className="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2"
                     >
                       Sign in
@@ -41,7 +40,7 @@ const Hero = () => {
                   </li>
                   <li>
                     <Link
-                      href="/signup"
+                      href="sign-up"
                       target="_blank"
                       className="flex items-center gap-4 rounded-md bg-white/[0.12] px-6 py-[14px] text-base font-medium text-white transition duration-300 ease-in-out hover:bg-white hover:text-dark"
                     >
@@ -1233,9 +1232,10 @@ const Hero = () => {
           </div>
         </div>
       </section>
+      
       <About />
+      <Team/>
       <Contact   />
-      <Clients />
       <Footer />
 
     </>

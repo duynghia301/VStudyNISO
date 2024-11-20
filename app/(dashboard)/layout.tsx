@@ -1,17 +1,5 @@
-import { ClerkProvider } from "@clerk/nextjs";
-import localFont from "next/font/local";
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { Sidebar } from "./_components/sidebar";
 
 
 const DashboardLayout = ({
@@ -22,13 +10,11 @@ const DashboardLayout = ({
 
 
     return (
-        <ClerkProvider>
-        <html lang="en">
-          <body>
-            {children}
-          </body>
-        </html>
-      </ClerkProvider>
+       <div className="h-full">
+        <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
+          <Sidebar/>
+        </div>
+       </div>
       );
 }
  

@@ -6,27 +6,51 @@ body {
   :root{
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
-
+    margin: 0;
+    padding: 0;
+     background-color: #f4f6f9;
+  color: #333;
   }
 }
-
+h2, h3, h4 {
+  color: #1a73e8;
+}
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.card {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.ant-btn-primary {
+  background-color: #1a73e8;
+  border-color: #1a73e8;
+  transition: background-color 0.3s;
+}
+.ant-btn-primary:hover {
+  background-color: #0c56a1;
+  border-color: #0c56a1;
+}
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
+    /* Nền sáng */
+    --background: 188 100% 46% / 0.19;
+    --foreground: 222.2 84% 4.9%; /* Màu văn bản tối */
+    --card: 0 0% 100%; 
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
+    --primary: 188 100% 46%; /* Màu chính cho các yếu tố tương tác */
+    --primary-foreground: 210 40% 98%; /* Màu văn bản chính sáng */
+    --secondary: 210 40% 96.1%; /* Màu thứ cấp */
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84.2% 60.2%; /* Màu cho các yếu tố phá hủy */
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
@@ -36,35 +60,46 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --radius: 0.5rem; /* Độ bo góc */
+    --mau-footer:222 55% 51% / 0.94;
+    --mau-contact:188 71% 76%;
+    --mau-contac2:233 53% 49%;
+    
   }
+
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Nền tối */
+    --background: 358 55% 0%; /* Nền tối */
+    --foreground: 210 40% 98%; /* Văn bản sáng */
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
+    --primary: 358 55% 0% / 0.66; /* Màu chính cho các yếu tố tương tác */
+    --primary-foreground: 222.2 47.4% 11.2%; /* Văn bản sáng trên nền tối */
+    --secondary: 217.2 32.6% 17.5%; /* Màu thứ cấp tối */
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 30.6%; /* Màu cho các yếu tố phá hủy */
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
+    --chart-1: 220 70% 50%; /* Màu biểu đồ */
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --mau-footer:222 55% 10% / 0.94;
+    --mau-contact:188 71% 4% / 0.79;
+    --mau-contac2:233 53% 17%;
   }
 }
+
+
 
 @layer base {
   * {
@@ -72,5 +107,34 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+@media (max-width: 768px) {
+  .assignments-container,
+  .assignment-details-container,
+  .discussion-container,
+  .discussion-detail-container,
+  .grades-container {
+    padding: 10px;
+  }
+
+  .assignment-card,
+  .assignment-details-container,
+  .message-list {
+    padding: 15px;
+  }
+
+  .assignment-submit-button,
+  .back-button,
+  .assignment-button {
+    width: 100%;
+  }
+
+  .message-input {
+    margin-top: 10px;
+  }
+
+  .container {
+    padding: 10px;
   }
 }

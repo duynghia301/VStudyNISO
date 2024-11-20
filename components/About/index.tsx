@@ -1,11 +1,19 @@
+import { useState } from "react";
+
 import Image from "next/image";
+import Team from "../Team";
+import "@/styles/index.css";
 
 const About = () => {
+
+
+
+
+  
   return (
     <section
       id="about"
-      className="bg-gray-1 pb-8 pt-20 dark:bg-dark-2 lg:pb-[70px] lg:pt-[120px]"
-    >
+      className="bg-gray-1 pb-8 pt-20 dark:bg-dark-2 lg:pb-[70px] lg:pt-[120px]">
       <div className="container">
         <div className="wow fadeInUp" data-wow-delay=".2s">
           <div className="-mx-4 flex flex-wrap items-center">
@@ -20,12 +28,12 @@ const About = () => {
                   Chúng tôi Group 12 luôn muốn sáng tạo và thách thức bản thân mình sau khoảng thời gian tích lũy kiến thức UEF, hiện nay chúng tôi đang phát triển 1 website cho phép người dùng dễ dàng học tập từ những chuyên gia, giảng viên,.... chúng tôi muốn phát triển nó hoạt động và có thể đưa vào hoạt động trong môi trường giáo dục!
                 </p>
 
-                <a
-                  href="/#"
+                {/* <a
+                  href="/about"
                   className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white duration-300 hover:bg-primary/90"
                 >
                   Xem thêm
-                </a>
+                </a> */}
               </div>
             </div>
 
@@ -181,6 +189,7 @@ const About = () => {
           </div>
         </div>
       </div>
+   
     </section>
   );
 };
