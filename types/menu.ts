@@ -3,5 +3,5 @@ export type Menu = {
   title: string;
   path?: string;
   newTab: boolean;
-  submenu?: Menu[];
+  submenu?: Menu[]; // Recursively defines submenu as an array of Menu items
 };

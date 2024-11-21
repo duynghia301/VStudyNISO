@@ -4,10 +4,11 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Key, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import "@/styles/index.css";
 import "@/styles/prism-vsc-dark-plus.css";
 import menuData from "./menuData";
+import { Menu } from "@/types/menu";
 
 
 const Header = () => {
@@ -46,10 +47,17 @@ const Header = () => {
    };
  
   // submenu handler
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const [openIndex, setOpenIndex] = useState<number>(-1);
+
   const handleSubmenu = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
+    if (openIndex === index) {
+      setOpenIndex(-1);
+    } else {
+      setOpenIndex(index);
+    }
   };
+  
 
 
   const { theme, setTheme } = useTheme();
@@ -235,19 +243,22 @@ const Header = () => {
                               openIndex === index ? "!-left-[25px]" : "hidden"
                             }`}
                           >
-                            {menuItem?.submenu?.map((submenuItem: any, i: Key | null | undefined) => (
-                              <Link
-                                href={submenuItem.path}
-                                key={i}
-                                className={`block rounded px-4 py-[10px] text-sm ${
-                                  pathUrl === submenuItem.path
-                                    ? "text-primary"
-                                    : "text-body-color hover:text-primary dark:text-dark-6 dark:hover:text-primary"
-                                }`}
-                              >
-                                {submenuItem.title}
-                              </Link>
-                            ))}
+                        {menuItem?.submenu?.map((submenuItem: Menu, i: number) => (
+  <Link
+    href={submenuItem.path || "#"}
+    key={i}
+    className={`block rounded px-4 py-[10px] text-sm ${
+      pathUrl === submenuItem.path
+        ? "text-primary"
+        : "text-body-color hover:text-primary dark:text-dark-6 dark:hover:text-primary"
+    }`}
+  >
+    {submenuItem.title}
+  </Link>
+))}
+
+
+
                           </div>
                         </li>
                       ),
