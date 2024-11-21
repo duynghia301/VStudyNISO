@@ -2,7 +2,7 @@
 
 import { UserButton } from "@clerk/nextjs"
 import { ModeToggle } from "../themebutton"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import {Button} from "@/components/ui/button"
 import Link from "next/link"
 import { LogOut } from "lucide-react"

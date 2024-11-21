@@ -1,7 +1,7 @@
-import { useState } from "react";
+
 
 import Image from "next/image";
-import Team from "../Team";
+
 import "@/styles/index.css";
 
 const About = () => {

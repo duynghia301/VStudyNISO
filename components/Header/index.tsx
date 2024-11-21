@@ -8,10 +8,9 @@ import { Key, useEffect, useState } from "react";
 import "@/styles/index.css";
 import "@/styles/prism-vsc-dark-plus.css";
 import menuData from "./menuData";
-import { UserButton } from "@clerk/nextjs";
+
 
 const Header = () => {
-
 
   const pathUrl = usePathname();
   // Navbar toggle
@@ -47,14 +46,11 @@ const Header = () => {
    };
  
   // submenu handler
-  const [openIndex, setOpenIndex] = useState(-1);
-  const handleSubmenu = (index: any) => {
-    if (openIndex === index) {
-      setOpenIndex(-1);
-    } else {
-      setOpenIndex(index);
-    }
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const handleSubmenu = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
   };
+
 
   const { theme, setTheme } = useTheme();
 
