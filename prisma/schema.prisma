@@ -1,16 +1,132 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 model Profile{
   id String @id @default(uuid())
-  userID String @unique
+  userId String @unique
   name String
-  image
+  imageUrl String @db.Text
+  email String @db.Text
+
+  servers Server[]
+  member Member[]
+  chanel Chanel[]
+
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Server{
+  id String @id @default(uuid())
+  name String
+  imageUrl String @db.Text
+  inviteCode String @db.Text
+
+  profilleId String
+  profile Profile @relation(fields: [profilleId],references: [id],onDelete: Cascade) 
+  members Member[]
+  chanel Chanel[]
+
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  @@index([ profilleId])
+}
+
+enum MemberRole{
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model Member{
+  id String @id @default(uuid())
+  role MemberRole @default(GUEST)
+
+
+  profileId String
+  profile Profile @relation(fields: [profileId],references: [id],onDelete: Cascade)
+
+  serverId String
+  server Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+enum ChanelType{
+  TEXT
+  AUDIO
+  VIDEO
+}
+model Chanel{
+  id String @id @default(uuid())
+  name String
+  type ChanelType @default(TEXT)
+
+  profileId String
+  profile Profile @relation(fields: [profileId],references: [id],onDelete: Cascade)
+
+  serverId String
+  server Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+
+  
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+
+
+
+
+
+model Course {
+  id          String       @id @default(uuid())
+  userId      String
+  title       String       @db.Text
+  description String?      @db.Text
+  imageURL    String?      @db.Text
+  price       Float?
+  isPublished Boolean      @default(false)
+
+  categoryId  String?
+  category    Category?    @relation(fields: [categoryId], references: [id])
+  attachments Attachment[]
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([categoryId])
+} 
+
+model Category {
+  id     String   @id @default(uuid())
+  name   String   @unique
+  course Course[]
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  name      String
+  url       String   @db.Text
+
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
 }

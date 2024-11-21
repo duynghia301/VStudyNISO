@@ -4,6 +4,7 @@ import {ClerkProvider } from "@clerk/nextjs";
 import "../styles/index.css";
 import "../styles/prism-vsc-dark-plus.css";
 import { ThemeProvider } from "next-themes";
+import { ToastProvider } from "@/components/providers/toaster-provider";
 
 
 
@@ -30,7 +31,7 @@ export default function RootLayout({
             enableSystem={true}
             defaultTheme="light"
           >
-     
+         <ToastProvider/>
         {children}
    
         </ThemeProvider>
