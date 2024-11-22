@@ -138,3 +138,5 @@ h2, h3, h4 {
     padding: 10px;
   }
 }
+
+@import "~@uploadthing/react/styles.css"

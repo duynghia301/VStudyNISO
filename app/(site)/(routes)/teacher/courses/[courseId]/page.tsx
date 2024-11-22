@@ -3,6 +3,9 @@ import {db} from "@/lib/db"
 import { auth } from "@clerk/nextjs/server";
 import { LayoutDashboard } from "lucide-react";
 import { redirect } from "next/navigation";
+import { TitleForm } from "./_components/title-form";
+import { DescriptionForm } from "./_components/description-form";
+import { ImageForm } from "./_components/image-form";
 
 const CourseIDPage= async ({
     params
@@ -10,6 +13,7 @@ const CourseIDPage= async ({
     params:{courseId: string }
 })=>{
 
+    const {courseId}=await params;
     const {userId} = await auth();
     const isAuth = !!userId
 
@@ -19,7 +23,7 @@ const CourseIDPage= async ({
 
     const course = await db.course.findUnique({
         where:{
-            id: params.courseId
+            id: courseId,
         }
     })
     if (!course){
@@ -28,7 +32,7 @@ const CourseIDPage= async ({
 
     const requireFields=[
         course.title,
-        course.description,
+        course.description ||'',
         course.imageURL,
         course.categoryId
     ]
@@ -58,6 +62,18 @@ const CourseIDPage= async ({
                             tùy chỉnh khóa học
                         </h2>
                     </div>
+                    <TitleForm
+                    initialData = {course}
+                    courseId = {course.id}
+                    />
+                    <DescriptionForm
+                    initialData = {course}
+                    courseId = {course.id}
+                    />
+                     <ImageForm
+                     initialData = {course}
+                    courseId = {course.id}
+                    />
                 </div>
             </div>
         </div>
