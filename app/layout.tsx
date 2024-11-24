@@ -5,6 +5,7 @@ import "../styles/index.css";
 import "../styles/prism-vsc-dark-plus.css";
 import { ThemeProvider } from "next-themes";
 import { ToastProvider } from "@/components/providers/toaster-provider";
+import { ModalProvider } from "@/components/providers/model-provider";
 
 
 
@@ -24,19 +25,21 @@ export default function RootLayout({
     <ClerkProvider>
       <html suppressHydrationWarning={true} className="!scroll-smooth" lang="en">
       <head />
-      <body> 
-       
-          <ThemeProvider
-            attribute="class"
-            enableSystem={true}
-            defaultTheme="light"
-          >
-         <ToastProvider/>
-        {children}
-   
-        </ThemeProvider>
+        <body> 
+        
+            <ThemeProvider
+              attribute="class"
+              enableSystem={true}
+              defaultTheme="light"
+            >
+              <ToastProvider/>
+
+              <ModalProvider/>
+              {children}
       
-      </body>
+            </ThemeProvider>
+        
+        </body>
       <head/>
     </html>
    

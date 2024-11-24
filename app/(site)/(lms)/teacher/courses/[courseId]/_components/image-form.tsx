@@ -12,8 +12,7 @@ import toast from "react-hot-toast";
 import { Course } from "@prisma/client";
 import { FileUpload } from "@/components/file-upload";
 import Image from "next/image";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
 
 
 
@@ -41,12 +40,6 @@ export const ImageForm = ({
 
     const router = useRouter();
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver:zodResolver(formSchema),
-        defaultValues:{
-            imageURL:initialData?.imageURL||""
-        }
-    })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {

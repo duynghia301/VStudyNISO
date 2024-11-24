@@ -1,45 +1,35 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
-import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
-import { UploadThingError } from "uploadthing/server";
+import { auth } from "@clerk/nextjs/server";
+import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
 
-const auth = (req: NextApiRequest, res: NextApiResponse) => ({ id: "fakeId" }); // Fake auth function
+const handleAuth = async () => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+  return { userId:userId };
+}
 
-// FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
-  imageUploader: f({
-    image: {
-      /**
-       * For full list of options and defaults, see the File Route API reference
-       * @see https://docs.uploadthing.com/file-routes#route-config
-       */
-      maxFileSize: "4MB",
-      maxFileCount: 1,
-    },
-  })
-    // Set permissions and file types for this FileRoute
-    .middleware(async ({ req, res }) => {
-      // This code runs on your server before upload
-      const user = await auth(req, res);
 
-      // If you throw, the user will not be able to upload
-      if (!user) throw new UploadThingError("Unauthorized");
+  courseImage:f({image:{maxFileSize:"4MB", maxFileCount :1}})
+    .middleware(()=>handleAuth())
+    .onUploadComplete(()=>{}),
+  courseAttachment: f(["text","image","video","audio","pdf"])
+    .middleware(()=> handleAuth())
+    .onUploadComplete(()=>{}),
+  chapterVideo: f({video:{maxFileCount: 1,maxFileSize:"512GB"}})
+    .middleware(()=> handleAuth())
+    .onUploadComplete(()=>{}),
 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.id };
-    })
-    .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
-      console.log("Upload complete for userId:", metadata.userId);
+  classImage: f({image:{maxFileCount: 1,maxFileSize:"4MB"}})
+    .middleware(()=> handleAuth())
+    .onUploadComplete(()=>{}),
+  messageFile: f(["image","pdf"])
+    .middleware(()=> handleAuth())
+    .onUploadComplete(()=>{})
+  
+  
 
-      console.log("file url", file.url);
-
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { uploadedBy: metadata.userId };
-    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
