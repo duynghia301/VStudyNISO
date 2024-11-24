@@ -3,13 +3,7 @@ import{db} from "@/lib/db"
 import { RedirectToSignIn } from "@clerk/nextjs";
         
 
-interface Profile {
-    id:string;
-    userId:string;
-    name:string;
-    imageUrl:string;
-    email:string;
-}
+
 
 export const initialProfile = async ()=>{
     const user = await currentUser();

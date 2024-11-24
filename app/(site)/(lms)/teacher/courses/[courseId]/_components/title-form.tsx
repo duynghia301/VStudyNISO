@@ -63,6 +63,7 @@ export const TitleForm = ({
             router.refresh();
 
         } catch (error) {
+            console.error("Error", error); 
             toast.error("Something when wrong") 
         }
     }

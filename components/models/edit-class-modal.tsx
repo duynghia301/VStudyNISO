@@ -26,6 +26,7 @@ import {
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -36,13 +37,14 @@ const formSchema = z.object({
     })
 });
 
-export const CreateClassModal = () => {
+export const EditClassModal = () => {
 
-    const {isOpen,onClose,type}= useModal();
+    const { isOpen, onClose, type, data}= useModal();
+    const { server } = data
 
     const router = useRouter();
 
-    const isModalOpen = isOpen && type ==="createClass";
+    const isModalOpen = isOpen && type ==="editClass";
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -52,11 +54,19 @@ export const CreateClassModal = () => {
         }
     });
 
+
+    useEffect(()=>{
+        if (server){
+            form.setValue("name",server.name)
+            form.setValue("imageUrl", server.imageUrl)
+        }
+    },[server,form]);
+
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            await axios.post("/api/classes", values)
+            await axios.patch(`/api/classes/${server?.id}`, values)
 
             form.reset();
             router.refresh();
@@ -77,10 +87,10 @@ export const CreateClassModal = () => {
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Tạo phòng học
+                        Chỉnh sửa thông tin lớp học
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
-                        Thêm ảnh và tên lớp để bắt đầu.
+                        VStudy
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
@@ -112,7 +122,7 @@ export const CreateClassModal = () => {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                                            Class name
+                                            Tên lớp
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -129,7 +139,7 @@ export const CreateClassModal = () => {
                         </div>
                         <DialogFooter className="bg-gray-100 px-6 py-4">
                             <Button type="submit" disabled={isLoading}>
-                                Create
+                                Lưu
                             </Button>
                         </DialogFooter>
                     </form>

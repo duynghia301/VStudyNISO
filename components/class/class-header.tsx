@@ -43,34 +43,42 @@ export const ClassHeader = ({
                     <ChevronDown className="h-5 w-5 ml-auto" />
                 </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent onClick={()=>onOpen("invite",{server})}
+            <DropdownMenuContent 
             
             className="w-56 text-xs font-medium text-black
             dark:text-neutral-400 space-y-[2px]">
                 {isModerator && (
-                    <DropdownMenuItem className="text-indigo-700 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer ">
-                        Invite people
+                    <DropdownMenuItem 
+                        onClick={()=>onOpen("invite",{server})}
+                        className="text-indigo-700 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer ">
+                        Mời thành viên
                         <UserPlus className=" h-4 w-4 ml-auto"/>
                     </DropdownMenuItem>
                     
                 )}
                 {isAdmin && (
-                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer ">
-                        Settings
+                    <DropdownMenuItem 
+                        onClick={()=> onOpen("editClass",{server})}
+                        className="px-3 py-2 text-sm cursor-pointer ">
+                            Cài đặt
                         <Settings className=" h-4 w-4 ml-auto"/>
                     </DropdownMenuItem>
                     
                 )}
                 {isAdmin && (
-                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer ">
-                        Manage Members
+                    <DropdownMenuItem 
+                        onClick={()=>onOpen("members",{server})}
+                        className="px-3 py-2 text-sm cursor-pointer ">
+                             Quản lí thành viên
                         <Users className=" h-4 w-4 ml-auto"/>
                     </DropdownMenuItem>
                     
                 )}
                 {isModerator && (
-                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer ">
-                        Create Channel
+                    <DropdownMenuItem 
+
+                        className="px-3 py-2 text-sm cursor-pointer ">
+                            Tạo phòng
                         <PlusCircle className=" h-4 w-4 ml-auto"/>
                     </DropdownMenuItem>
                     
@@ -80,16 +88,20 @@ export const ClassHeader = ({
                 )}
              
                 {isAdmin && (
-                    <DropdownMenuItem className="text-red-600  px-3 py-2 text-sm cursor-pointer ">
-                        Delete Server
+                    <DropdownMenuItem 
+
+                        className="text-red-600  px-3 py-2 text-sm cursor-pointer ">
+                            Xóa khóa học
                         <TrashIcon className=" h-4 w-4 ml-auto"/>
                         
                     </DropdownMenuItem>
                     
                 )}
                 {!isAdmin && (
-                    <DropdownMenuItem className="text-red-600  px-3 py-2 text-sm cursor-pointer ">
-                        Leave Server
+                    <DropdownMenuItem 
+                    
+                        className="text-red-600  px-3 py-2 text-sm cursor-pointer ">
+                            Rời khỏi khóa học
                         <LogOutIcon className=" h-4 w-4 ml-auto"/>
                         
                     </DropdownMenuItem>

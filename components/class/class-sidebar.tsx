@@ -1,7 +1,7 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { ChanelType } from "@prisma/client";
-import { channel } from "diagnostics_channel";
+// import { ChanelType } from "@prisma/client";
+// import { channel } from "diagnostics_channel";
 import { redirect } from "next/navigation";
 import { ClassHeader } from "./class-header";
 
@@ -46,10 +46,10 @@ export const CLassSideBar = async({
         }
     ,);
 
-    const textChannels =server?.chanel.filter((channel)=>channel.type === ChanelType.TEXT)
-    const audioChannels =server?.chanel.filter((channel)=>channel.type === ChanelType.AUDIO)
-    const videoChannels =server?.chanel.filter((channel)=>channel.type === ChanelType.VIDEO)
-    const members = server?.members.filter((member)=>member.profileId !== profile.id)
+    // const textChannels =server?.chanel.filter((channel)=>channel.type === ChanelType.TEXT)
+    // const audioChannels =server?.chanel.filter((channel)=>channel.type === ChanelType.AUDIO)
+    // const videoChannels =server?.chanel.filter((channel)=>channel.type === ChanelType.VIDEO)
+    // const members = server?.members.filter((member)=>member.profileId !== profile.id)
     
     if(!server){
         return redirect("/dashboard")

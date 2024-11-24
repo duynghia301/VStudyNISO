@@ -65,6 +65,7 @@ export const DescriptionForm = ({
             router.refresh();
 
         } catch (error) {
+            console.error("Error:", error); 
             toast.error("Something when wrong") 
         }
     }
