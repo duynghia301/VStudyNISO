@@ -76,7 +76,7 @@ export const ClassHeader = ({
                 )}
                 {isModerator && (
                     <DropdownMenuItem 
-
+                        onClick={()=>onOpen("createChannel",{server})}
                         className="px-3 py-2 text-sm cursor-pointer ">
                             Tạo phòng
                         <PlusCircle className=" h-4 w-4 ml-auto"/>
@@ -89,7 +89,7 @@ export const ClassHeader = ({
              
                 {isAdmin && (
                     <DropdownMenuItem 
-
+                        onClick={()=>onOpen("deleteServer",{server})}
                         className="text-red-600  px-3 py-2 text-sm cursor-pointer ">
                             Xóa khóa học
                         <TrashIcon className=" h-4 w-4 ml-auto"/>
@@ -99,7 +99,7 @@ export const ClassHeader = ({
                 )}
                 {!isAdmin && (
                     <DropdownMenuItem 
-                    
+                        onClick={()=> onOpen("leaveServer", {server})}
                         className="text-red-600  px-3 py-2 text-sm cursor-pointer ">
                             Rời khỏi khóa học
                         <LogOutIcon className=" h-4 w-4 ml-auto"/>

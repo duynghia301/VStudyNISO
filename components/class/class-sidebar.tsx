@@ -1,7 +1,6 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-// import { ChanelType } from "@prisma/client";
-// import { channel } from "diagnostics_channel";
+
 import { redirect } from "next/navigation";
 import { ClassHeader } from "./class-header";
 
