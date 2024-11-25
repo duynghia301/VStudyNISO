@@ -35,6 +35,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { useEffect } from "react";
 
 
 const formSchema = z.object({
@@ -51,8 +52,8 @@ const formSchema = z.object({
 
 export const CreateChannelModal = () => {
 
-    const {isOpen,onClose,type}= useModal();
-
+    const {isOpen,onClose,type,data}= useModal();
+    const {channelType}= data
     const router = useRouter();
     const params = useParams()
 
@@ -62,9 +63,18 @@ export const CreateChannelModal = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
           name:"",
-          type:ChanelType.TEXT,
+          type:channelType||ChanelType.TEXT,
         }
     });
+
+    useEffect(()=>{
+        if (channelType){
+            form.setValue("type",channelType);
+
+        }else{
+            form.setValue("type",ChanelType.TEXT)
+        }
+    },[channelType,form ])
 
     const isLoading = form.formState.isSubmitting;
 

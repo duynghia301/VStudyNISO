@@ -14,7 +14,7 @@ export const NavigationAction = ()=>{
         <div>
             <ActionTooltip
                 side="right"
-                lable="Add a class !"
+                lable="Thêm lớp học !"
                 align="center"
 
             >
