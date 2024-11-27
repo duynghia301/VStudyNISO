@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import NotFound from "@/components/NotFound";
 import { Metadata } from "next";
 
@@ -9,6 +10,7 @@ const ErrorPage = () => {
   return (
     <>
       <NotFound />
+      <Footer/>
     </>
   );
 };

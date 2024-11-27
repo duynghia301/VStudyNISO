@@ -1235,7 +1235,7 @@ const Hero = () => {
       
       <About />
       <Team/>
-      <Contact   />
+
       <Footer />
 
     </>

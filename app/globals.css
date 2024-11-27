@@ -37,20 +37,20 @@ h2, h3, h4 {
   :root {
     /* Nền sáng */
     --background: 188 100% 46% / 0.19;
-    --foreground: 222.2 84% 4.9%; /* Màu văn bản tối */
+    --foreground: 222.2 84% 4.9%; 
     --card: 0 0% 100%; 
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 188 100% 46%; /* Màu chính cho các yếu tố tương tác */
-    --primary-foreground: 210 40% 98%; /* Màu văn bản chính sáng */
-    --secondary: 210 40% 96.1%; /* Màu thứ cấp */
+    --primary: 188 100% 46%; 
+    --primary-foreground: 210 40% 98%; 
+    --secondary: 210 40% 96.1%; 
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%; /* Màu cho các yếu tố phá hủy */
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
@@ -60,16 +60,14 @@ h2, h3, h4 {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem; /* Độ bo góc */
+    --radius: 0.5rem; 
     --mau-footer:222 55% 51% / 0.94;
-    --mau-contact:188 71% 76%;
-    --mau-contac2:233 53% 49%;
     
   }
 
   .dark {
     /* Nền tối */
-    --background: 358 55% 0%; /* Nền tối */
+    --background: 223 7% 21% / 0.61; /* Nền tối */
     --foreground: 210 40% 98%; /* Văn bản sáng */
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -94,8 +92,6 @@ h2, h3, h4 {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --mau-footer:222 55% 10% / 0.94;
-    --mau-contact:188 71% 4% / 0.79;
-    --mau-contac2:233 53% 17%;
   }
 }
 
