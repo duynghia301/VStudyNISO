@@ -16,7 +16,7 @@ const teamData: TeamType[] = [
   {
     id: 2,
     name: "Hoàng Sơn",
-    designation: "215052",
+    designation: "215052129",
     image: "/images/team/team-02.png",
     facebookLink: "https://www.facebook.com/nguyenhoangson.heh",
     twitterLink: "/#",

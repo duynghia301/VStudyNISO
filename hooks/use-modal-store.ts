@@ -3,12 +3,14 @@ import {ChanelType, Server,Chanel } from "@prisma/client";
 import {create} from "zustand"
 
 
-export type ModalType = "createClass" | "invite" |"editClass"|"members"|"createChannel"|"leaveServer"|"deleteServer"|"deleteChannel"|"editChannel";
+export type ModalType = "createClass" | "invite" |"editClass"|"members"|"createChannel"|"leaveServer"|"deleteServer"|"deleteChannel"|"editChannel"|"messageFile";
 
 interface ModalData{
     server?:Server;
-    channel?:Chanel,
-    channelType?:ChanelType
+    channel?:Chanel;
+    channelType?:ChanelType;
+    apiUrl?:string;
+    query?:Record<string,any>;
    
 }
 

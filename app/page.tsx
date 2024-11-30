@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const Home = () => (
   <div>
     
-    <div className="header">
+    <div className="header ">
    
       <Header/>
       <Hero/>

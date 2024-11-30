@@ -15,6 +15,13 @@ body {
 h2, h3, h4 {
   color: #1a73e8;
 }
+
+html, body, #__next {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   padding: 20px;
   max-width: 1200px;
@@ -33,6 +40,7 @@ h2, h3, h4 {
   background-color: #0c56a1;
   border-color: #0c56a1;
 }
+
 @layer base {
   :root {
     /* Nền sáng */

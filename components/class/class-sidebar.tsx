@@ -79,7 +79,7 @@ export const CLassSideBar = async({
         <div className="flex flex-col h-full text-primary w-full dark:bg-[#2B2D21] bg-sky-200">
             <ClassHeader  
                 server={server}
-                // member={members}
+              
                 
                 role={role}
             />

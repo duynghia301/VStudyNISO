@@ -12,18 +12,19 @@ import { DialogTitle } from "@/components/ui/dialog"
 
 export const MobileToggle = ({ serverId }: { serverId: string }) => {
     return (
-        <Sheet>
-            <SheetTrigger >
+        <Sheet >
+            <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">
                     <Menu />
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="p-0 flex gap-0">
+                
+                <div className="w-[72px]">
                 <VisuallyHidden>
                     <DialogTitle>Menu Navigation</DialogTitle> 
                 </VisuallyHidden>
-                <div className="w-[72px]">
-                    <NavigationSideBar />
+                <NavigationSideBar />
                 </div>
                 <CLassSideBar serverId={serverId} />
             </SheetContent>

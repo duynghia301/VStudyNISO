@@ -6,6 +6,7 @@ import "../styles/prism-vsc-dark-plus.css";
 import { ThemeProvider } from "next-themes";
 import { ToastProvider } from "@/components/providers/toaster-provider";
 import { ModalProvider } from "@/components/providers/model-provider";
+import { SocketProvider } from "@/components/providers/socket-provider";
 
 
 
@@ -33,10 +34,10 @@ export default function RootLayout({
               defaultTheme="light"
             >
               <ToastProvider/>
-
+              <SocketProvider>
               <ModalProvider/>
               {children}
-      
+              </SocketProvider>
             </ThemeProvider>
         
         </body>

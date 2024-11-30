@@ -4,7 +4,7 @@ import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { UploadDropzone } from "@/lib/uploadthing";
 // import "@/uploadthing/react/style.css";
 import toast from "react-hot-toast";
-import {X} from "lucide-react"
+import {File, X} from "lucide-react"
 import Image from "next/image";
 
 interface FileUploadProps {
@@ -20,7 +20,7 @@ export const FileUploadClass = ({
     }:FileUploadProps)=>{
         const fileType = value?.split(".").pop();
 
-        if( value && fileType !== "pdf" ){
+        if( value && fileType !== "pdf"){
             return(
                 <div className=" relative h-20 w-20">
                     <Image
@@ -39,7 +39,28 @@ export const FileUploadClass = ({
                 </div>
             )
         }
-
+        if (value && fileType === "pdf"){
+            return(
+                <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
+                    <File className="h-10 w-10 fill-indigo-200 stroke-indigo-400"/>
+                    <a 
+                        href={value}
+                        target="_blank"
+                        rel="noopeneder noreferrer"
+                        className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
+                    >
+                        {value}
+                    </a>
+                    <button
+                        onClick={()=>onChange("")}
+                        className="bg-red-600 text-white p-1 rounded-full absolute -top-2 -right-2 shadow-sm"
+                        type="button"
+                        >
+                                <X className="h-4 w-4"/>
+                    </button>
+                </div>
+            )
+        }
         return(
             <UploadDropzone
                 endpoint={endpoint}
