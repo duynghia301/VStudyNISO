@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import { ToastProvider } from "@/components/providers/toaster-provider";
 import { ModalProvider } from "@/components/providers/model-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 
 
@@ -36,7 +37,9 @@ export default function RootLayout({
               <ToastProvider/>
               <SocketProvider>
               <ModalProvider/>
+              <QueryProvider>
               {children}
+              </QueryProvider>
               </SocketProvider>
             </ThemeProvider>
         

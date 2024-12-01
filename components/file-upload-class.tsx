@@ -2,7 +2,6 @@
 
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { UploadDropzone } from "@/lib/uploadthing";
-// import "@/uploadthing/react/style.css";
 import toast from "react-hot-toast";
 import {File, X} from "lucide-react"
 import Image from "next/image";
@@ -46,7 +45,7 @@ export const FileUploadClass = ({
                     <a 
                         href={value}
                         target="_blank"
-                        rel="noopeneder noreferrer"
+                        rel="noopener noreferrer"
                         className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
                     >
                         {value}
@@ -61,6 +60,8 @@ export const FileUploadClass = ({
                 </div>
             )
         }
+
+        
         return(
             <UploadDropzone
                 endpoint={endpoint}

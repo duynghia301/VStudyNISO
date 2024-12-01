@@ -1,14 +1,18 @@
 import type { NextConfig } from "next";
-import { hostname } from "os";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  images:{
-    remotePatterns:[
-      {hostname: 'utfs.io'}
+  webpack: (config) => {
+    config.externals.push({
+      "utf-8-validate": "commonjs utf-8-validate",
+      bufferutil: "commonjs bufferutil"
+    });
+    return config;
+  },
+  images: {
+    remotePatterns: [
+      { hostname: 'utfs.io' }
     ]
-     
-    
   }
 };
 
