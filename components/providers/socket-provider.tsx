@@ -1,6 +1,5 @@
 "use client"
 
-import path from "path";
 import {
   createContext,
   useContext,
