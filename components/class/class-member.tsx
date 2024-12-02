@@ -4,12 +4,11 @@ import { cn } from "@/lib/utils";
 import { Member, MemberRole, Profile, Server } from "@prisma/client"
 import { ShieldAlert, ShieldCheck } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { root } from "postcss";
 import { UserAvatar } from "../user-avatar";
 
 interface ClassMemeberProps{
     member: Member& {profile:Profile}
-    server:Server;
+    // server:Server;
 }
 
 const roleIconMap={
@@ -21,12 +20,12 @@ const roleIconMap={
 
 export const ClassMemeber = ({
     member,
-    server
+    // server
 }:ClassMemeberProps)=>{
     const params = useParams();
     const router = useRouter();
 
-    const icon = roleIconMap[member.role];
+    // const icon = roleIconMap[member.role];
 
     const onClick =()=> {
         router.push(`/servers/${params?.serverId}/conversations/${member.id}`)

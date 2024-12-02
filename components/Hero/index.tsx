@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Header from "@/components/Header";
 import About from "@/components/About";
-import Contact from "../Contact";
 import Footer from "../Footer";
 import Team from "../Team";
 

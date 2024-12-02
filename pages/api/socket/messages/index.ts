@@ -1,8 +1,6 @@
 import { currentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
 import { NextApiResponseServerIo } from "@/types";
-import { error } from "console";
-import { channel } from "diagnostics_channel";
 import { NextApiRequest } from "next";
 
 export default async function handler(req:NextApiRequest, res: NextApiResponseServerIo) {
