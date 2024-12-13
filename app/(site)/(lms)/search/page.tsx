@@ -1,20 +1,51 @@
-'use client'
 
-const Seach = () => {
+import { db } from "@/lib/db";
+import { Categories } from "./_components/categories";
+import { SearchInput } from "@/components/searchI-input";
+import { getCourses } from "@/actions/get-courses";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { CoursesList } from "@/components/courses-list";
+
+interface searchParamsProps{
+    searchParams:{
+        title:string
+        categoryId:string
+    }
+}
+
+const Seach = async({
+    searchParams,
+}:searchParamsProps) => {
+    const {userId}= await auth()
+    if (!userId){
+        return redirect("/")
+    }
+    const categories = await db.category.findMany({
+        orderBy:{
+            name:"asc"
+        }
+    })
+
+    const courses = await getCourses({
+        userId,
+        ...searchParams,
+
+    })
     return ( 
-        <div className="container mx-auto p-4">
-            <div className="flex justify-between mb-4">
-              
+        <>
+            <div className="px-6 pt-6 md:hidden md:mb-0 block">
+                <SearchInput/>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {Array.from({ length: 40 }, (_, i) => (
-                    <div key={i} className="p-6 bg-white rounded-lg shadow-md">
-                        <h3 className="text-lg font-semibold mb-2">Card {i + 1}</h3>
-                        <p className="text-gray-700">This is card number {i + 1}</p>
-                    </div>
-                ))}
+            <div className="p-6 space-y-4">
+                <Categories
+                    items={categories}
+                />
+                <CoursesList
+                    items={courses}
+                />
             </div>
-        </div>
+        </>
      );
 }
  

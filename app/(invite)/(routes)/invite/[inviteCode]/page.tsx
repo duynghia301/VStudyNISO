@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -56,4 +55,3 @@ const InviteCodePage = async({
  
 export default InviteCodePage;
 
-/* eslint-disable @typescript-eslint/no-unused-vars */

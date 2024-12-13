@@ -142,5 +142,7 @@ html, body, #__next {
     padding: 10px;
   }
 }
-
+.ql-container{
+  font-size: 16px !important;
+}
 @import "~@uploadthing/react/styles.css"

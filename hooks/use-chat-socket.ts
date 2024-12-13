@@ -26,12 +26,10 @@ export const useChatSocket = ({
     useEffect(() => {
         if (!socket) return;
 
-        // Update message event handler
         const updateMessage = (message: MessageWithMemberWithProfile) => {
             queryClient.setQueryData([queryKey], (oldData: any) => {
                 if (!oldData?.pages?.length) return oldData;
 
-                // Update the message in the pages
                 const newData = oldData.pages.map((page: any) => ({
                     ...page,
                     items: page.items.map((item: MessageWithMemberWithProfile) =>
@@ -43,7 +41,6 @@ export const useChatSocket = ({
             });
         };
 
-        // Add new message event handler
         const addMessage = (message: MessageWithMemberWithProfile) => {
             queryClient.setQueryData([queryKey], (oldData: any) => {
                 const newData = oldData?.pages ? [...oldData.pages] : [{ items: [message] }];
@@ -51,12 +48,9 @@ export const useChatSocket = ({
                 return { ...oldData, pages: newData };
             });
         };
-
-        // Listen to socket events
         socket.on(updateKey, updateMessage);
         socket.on(addKey, addMessage);
 
-        // Clean up event listeners when component is unmounted
         return () => {
             socket.off(addKey, addMessage);
             socket.off(updateKey, updateMessage);

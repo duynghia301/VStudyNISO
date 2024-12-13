@@ -8,6 +8,7 @@ import { ToastProvider } from "@/components/providers/toaster-provider";
 import { ModalProvider } from "@/components/providers/model-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { ConfettiProvider } from "@/components/providers/confetti-provider";
 
 
 
@@ -38,6 +39,7 @@ export default function RootLayout({
               <SocketProvider>
               <ModalProvider/>
               <QueryProvider>
+              <ConfettiProvider/>
               {children}
               </QueryProvider>
               </SocketProvider>

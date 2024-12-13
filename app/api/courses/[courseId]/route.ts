@@ -1,18 +1,82 @@
 import { db } from "@/lib/db";
-import { getAuth } from "@clerk/nextjs/server"; // Sử dụng getAuth từ @clerk/nextjs/server
-import { NextResponse, NextRequest } from "next/server"; // Sử dụng NextResponse và NextRequest
+import { auth, getAuth } from "@clerk/nextjs/server"; 
+import { NextResponse, NextRequest } from "next/server"; 
+
+import Mux from "@mux/mux-node"
+
+const mux = new Mux({
+  tokenId: process.env.MUX_TOKEN_ID as string,
+  tokenSecret: process.env.MUX_PRIVATE_KEY as string,
+});
+
+const { video } = mux;
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { courseId: string; } }
+) {
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const courseOwner = await db.course.findUnique({
+      where: {
+        id: params.courseId,
+        userId,
+      },
+    });
+    if (!courseOwner) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const course = await db.course.findUnique({
+      where: {
+        id: params.courseId,
+      },
+      include: {
+        chapters: {
+          include: {
+            muxData: true,
+          },
+        },
+      },
+    });
+    if (!course) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+
+    for (const chapter of course.chapters) {
+      if (chapter.muxData?.assetId) {
+        await video.assets.delete(chapter.muxData.assetId); 
+      }
+    }
+
+    const deletedCourse = await db.course.delete({
+      where: {
+        id: params.courseId,
+      },
+    });
+
+    return NextResponse.json(deletedCourse);
+  } catch (error) {
+    console.log("COURSE_ID_DELETE", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
 
 export async function PATCH(
-  req: NextRequest, // Sử dụng NextRequest từ next/server
+  req: NextRequest, 
   { params }: { params: { courseId: string } }
 ) {
   try {
-    const { courseId } =  params;
+    const { courseId } = params;
     const authResult = await getAuth(req); 
     const userId = authResult.userId; 
 
     if (!userId) {
-      return NextResponse.redirect('/dashboard'); // Điều hướng nếu không có userId
+      return NextResponse.redirect('/dashboard'); 
     }
 
     const values = await req.json();
