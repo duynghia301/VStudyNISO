@@ -1,0 +1,275 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+model Profile{
+  id String @id @default(uuid())
+  userId String @unique
+  name String
+  imageUrl String @db.Text
+  email String @db.Text
+
+  servers Server[]
+  member Member[]
+  chanel Chanel[]
+
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Server{
+  id String @id @default(uuid())
+  name String
+  imageUrl String @db.Text
+  inviteCode String @unique
+
+  profilleId String
+  profile Profile @relation(fields: [profilleId],references: [id],onDelete: Cascade) 
+  members Member[]
+  chanel Chanel[]
+
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  @@index([ profilleId])
+}
+
+enum MemberRole{
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model Member{
+  id String @id @default(uuid())
+  role MemberRole @default(GUEST)
+
+
+  profileId String
+  profile Profile @relation(fields: [profileId],references: [id],onDelete: Cascade)
+
+  serverId String
+  server Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+
+  message Message[]
+   directMessages DirectMessage[]
+ 
+
+  conversationInitiated Conversation[] @relation("MemberOne")
+  conversationReceived Conversation[] @relation("MemberTwo")
+
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+enum ChanelType{
+  TEXT
+  AUDIO
+  VIDEO
+}
+model Chanel{
+  id String @id @default(uuid())
+  name String
+  type ChanelType @default(TEXT)
+
+  profileId String
+  profile Profile @relation(fields: [profileId],references: [id],onDelete: Cascade)
+
+  serverId String
+  server Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+
+  messages Message[]
+  
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+
+model Message{
+  id String @id @default(uuid())
+  content String? @db.Text
+
+  fileUrl String? @db.Text
+
+  memberId String
+  member Member @relation(fields:[memberId], references: [id],onDelete: Cascade)
+
+  channelId String
+  channel Chanel @relation(fields: [channelId],references: [id],onDelete: Cascade)
+
+  delete Boolean @default(false)
+
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@index([channelId])
+  @@index([memberId])
+}
+
+model Conversation{
+  id String @id @default(uuid())
+  memberOneId String
+
+  memberOne Member @relation("MemberOne",fields:[memberOneId], references: [id],onDelete: Cascade)
+ 
+  memberTwoId String
+  memberTwo Member @relation("MemberTwo",fields:[memberTwoId], references: [id],onDelete: Cascade)
+
+ directMessages DirectMessage[]
+
+  @@index([memberTwoId])
+
+  @@unique([memberOneId,memberTwoId])
+}
+
+model DirectMessage{
+  id String @id @default(uuid())
+  content String? @db.Text
+
+  fileUrl String? @db.Text
+
+  memberId String
+  member Member @relation(fields:[memberId], references: [id],onDelete: Cascade)
+  
+  conversationId String
+  conversation Conversation @relation(fields:[conversationId], references: [id],onDelete: Cascade)
+  
+  delete Boolean @default(false)
+
+  creeatedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@index([memberId])
+  @@index([conversationId])
+}
+
+
+
+model Course {
+  id          String       @id @default(uuid())
+  userId      String
+  title       String       @db.Text
+  description String?      @db.Text
+  imageURL    String?      @db.Text
+  price       Float?
+  isPublished Boolean      @default(false)
+
+  categoryId  String?
+  category    Category?    @relation(fields: [categoryId], references: [id])
+
+  chapters Chapter[]
+  attachments Attachment[]
+  purchases Purchase[]
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([categoryId])
+  @@fulltext([title])
+} 
+
+model Category {
+  id     String   @id @default(uuid())
+  name   String   @unique
+  course Course[]
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  name      String
+  url       String   @db.Text
+
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model Chapter {
+  id String @id @default(uuid())
+  title       String
+  description String? @db.Text
+  videoUrl    String? @db.Text
+  position    Int
+  isPublished Boolean @default(false)
+  isFree      Boolean @default(false)
+
+  muxData     Muxdata?
+
+  courseId    String
+  course      Course @relation(fields: [courseId],references: [id],onDelete: Cascade)
+
+  userProgress UseProgress[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([courseId])
+
+}
+
+model Muxdata{
+  id String @id @default(uuid())
+  assetId String
+  playbackId String?
+
+  chapterId String @unique
+  chapter Chapter @relation(fields: [chapterId],references: [id],onDelete: Cascade)
+}
+
+
+model UseProgress{
+  id String @id @default(uuid())
+  userId String
+
+  chapterId String
+  chapter Chapter @relation(fields: [chapterId],references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([chapterId])
+  @@unique([userId,chapterId])
+}
+
+model Purchase {
+  id String @id @default(uuid())
+  userId String
+
+  courseId String
+  course Course @relation(fields: [courseId],references: [id],onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([courseId])
+  @@unique([userId,courseId])
+
+}
+
+model StripeCustomer{
+  id String @id @default(uuid())
+  userId String @unique
+  stripeCustomerId String @unique
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+}
