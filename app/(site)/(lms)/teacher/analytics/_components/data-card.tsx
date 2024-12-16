@@ -6,12 +6,16 @@ interface DataCardProps {
   shouldFormat?: boolean;
 }
 
+const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+};
+
 export const DataCard = ({
   value,
   label,
-  shouldFormat = false, 
+  shouldFormat = false,
 }: DataCardProps) => {
-  const formattedValue = shouldFormat ? value.toLocaleString() : value;
+  const formattedValue = shouldFormat ? formatCurrency(value) : value;
 
   return (
     <Card>
