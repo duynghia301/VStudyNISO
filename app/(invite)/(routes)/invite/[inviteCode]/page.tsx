@@ -2,55 +2,53 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-interface InviteCodePageProps{
-    params:{
-        inviteCode:string
-    }
-}
+const InviteCodePage = async ({
+  params,
+}: {
+  params: { inviteCode: string };
+}) => {
+  const profile = await currentProfile();
 
-const InviteCodePage = async({
-    params,
-}:InviteCodePageProps) => {
+  if (!profile) {
+    redirect("/sign-in");
+  }
 
-    const profile = await currentProfile();
-    if(!profile){
-    return redirect("/sign-in");
-    }
-    if(!params.inviteCode){
-    return redirect("/dashboard")
-    }
-    const existingServer = await db.server.findFirst({
-        where:{
-            inviteCode: params.inviteCode,
-            members:{
-                some:{
-                    profileId:profile.id
-                }
-            }
-        }       
-    });
+  const inviteCode = params?.inviteCode;
+  if (!inviteCode) {
+    redirect("/dashboard");
+  }
 
-    const server = await db.server.update({
-        where:{
-            inviteCode:params.inviteCode,
+  const existingServer = await db.server.findFirst({
+    where: {
+      inviteCode,
+      members: {
+        some: {
+          profileId: profile.id,
         },
-        data:{
-            members:{
-                create:{
-                    profileId:profile.id,
-                }
-            }
-        }
-    });
-    if(server){
-        return redirect(`/servers/${server.id}`)
-    }
-    if(existingServer){
-        return redirect (`/servers/${existingServer.id}`)
-    }
- 
+      },
+    },
+  });
 
-    return null
-}
- 
+  if (existingServer) {
+    redirect(`/servers/${existingServer.id}`);
+  }
+
+  const updatedServer = await db.server.update({
+    where: { inviteCode },
+    data: {
+      members: {
+        create: {
+          profileId: profile.id,
+        },
+      },
+    },
+  });
+
+  if (updatedServer) {
+    redirect(`/servers/${updatedServer.id}`);
+  }
+
+  redirect("/dashboard");
+};
+
 export default InviteCodePage;
