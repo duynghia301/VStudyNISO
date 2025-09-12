@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 
 interface ChatInputProps{
     apiUrl:string;
-    query:Record<string,any>;
+    query: Record<string, string | number | boolean | null | undefined>; 
     name: string;
     type:"conversation"|"chanel";
 }

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export const LeaveServerModal = () => {
     const { isOpen, onClose, type, data } = useModal();
@@ -29,8 +30,8 @@ export const LeaveServerModal = () => {
             onClose();
             router.refresh();
             router.push("/class")
-        } catch (error) {
-            
+        } catch  {
+            toast.error("Something went wrong")
         }
     }
    

@@ -8,20 +8,22 @@ import { db } from "@/lib/db";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-// Đúng kiểu Next.js 15: params và searchParams là Promise
-export default async function MemberIdPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ memberId: string; serverId: string }>;
-  searchParams: Promise<{ video?: boolean }>;
-}) {
-  const param = await params;
-  const searchParam = await searchParams;
-  const profile = await currentProfile();
+interface MemberIdPageProps {
+  params: Promise<{
+    memberId: string;
+    serverId: string;
+  }>;
+  searchParams:Promise< {
+    video?: boolean;
+  }>;
+}
 
+const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
+  const profile = await currentProfile();
+  const param = await params;
+  const searchParam  = await searchParams;
   if (!profile) {
-    return <RedirectToSignIn />;
+    return RedirectToSignIn;
   }
 
   const currentMember = await db.member.findFirst({
@@ -35,7 +37,7 @@ export default async function MemberIdPage({
   });
 
   if (!currentMember) {
-    redirect("/class");
+    return redirect("/class");
   }
 
   const conversation = await getOrCreateConversation(
@@ -44,7 +46,7 @@ export default async function MemberIdPage({
   );
 
   if (!conversation) {
-    redirect(`servers/${param.serverId}`);
+    return redirect(`servers/${param.serverId}`);
   }
 
   const { memberOne, memberTwo } = conversation;
@@ -93,4 +95,6 @@ export default async function MemberIdPage({
       )}
     </div>
   );
-}
+};
+
+export default MemberIdPage;

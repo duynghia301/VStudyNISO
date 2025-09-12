@@ -17,7 +17,7 @@ const Preview = ({
   const editorState = EditorState.createWithContent(contentState);
 
   return (
-    <div className="bg-white">
+    <div>
       <Editor
         editorState={editorState}
         toolbarHidden

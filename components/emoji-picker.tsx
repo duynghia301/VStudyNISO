@@ -16,7 +16,10 @@ interface EmojiPickerProps {
     onChange:(value:string)=> void
     
 }
-
+interface EmojiData {
+  native: string;
+  [key: string]: unknown;
+}
 export const EmojiPicker  = ({
     onChange,
 }:EmojiPickerProps)=>{
@@ -33,7 +36,7 @@ export const EmojiPicker  = ({
                 <Picker
                 theme= {resolvedTheme}
                     data={data}
-                    onEmojiSelect= {(emoji: any)=>onChange(emoji.native)}
+                    onEmojiSelect={(emoji: EmojiData) => onChange(emoji.native)}
                 />
             </PopoverContent>
         </Popover>

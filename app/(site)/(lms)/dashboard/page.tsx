@@ -1,25 +1,41 @@
-'use client'
+import { getDashboardCourses } from "@/actions/get-dashboard-courses";
+import { CoursesList } from "@/components/courses-list";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { InfoCard } from "./_components/info-card";
+import { CheckCircle, Clock } from "lucide-react";
 
-import { ModeToggle } from "@/components/themebutton";
-import { UserButton } from "@clerk/nextjs";
+export default async function Dashboard() {
+  const {userId} = await auth();
+  if(!userId){
+    return redirect("/");
+  }
+  const {
+    completedCourses,
+    coursesInProgress,
+  } = await getDashboardCourses(userId);
+  
 
-const Dashboard = () => {
-    return (
-        <div className="container mx-auto p-4">
-            <div className="flex justify-between mb-4">
-                <UserButton />
-                <ModeToggle />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {Array.from({ length: 40 }, (_, i) => (
-                    <div key={i} className="p-6 bg-white rounded-lg shadow-md">
-                        <h3 className="text-lg font-semibold mb-2">Card {i + 1}</h3>
-                        <p className="text-gray-700">This is card number {i + 1}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div className="p-6 space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <InfoCard 
+          icon={Clock}
+          label="In Progress"
+          numberOfItems={coursesInProgress.length}
+        />
+        <InfoCard 
+          icon={CheckCircle}
+          label="Completed"
+          numberOfItems={completedCourses.length}
+          variant="success"
+        />
+      </div>
+      <CoursesList 
+        items={[...coursesInProgress, ...completedCourses]}
+      />
+    </div>
+  );
+  
 }
-
-export default Dashboard;
+ 

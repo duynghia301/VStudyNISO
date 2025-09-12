@@ -38,7 +38,7 @@ export const  Actions  =  ({
            
             router.refresh();
 
-        } catch (error) {
+        } catch{
             toast.error("Something when wrong")
         }finally{
             setIsLoading(false)
@@ -56,7 +56,7 @@ export const  Actions  =  ({
             toast.success("Course deleted");
             router.refresh();
             router.push(`/teacher/courses`)
-        } catch (error) {
+        } catch  {
             toast.error("Something when wrong")
         }finally{
             setIsLoading(false)

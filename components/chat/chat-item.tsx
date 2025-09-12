@@ -165,7 +165,7 @@ export const ChatItem = ({
                                         </FormControl>
                                     </FormItem>
                                 )} />
-                                <Button disabled={isLoading} size="sm" variant="secondary">Save</Button>
+                                <Button disabled={isLoading} size="sm" variant="default">Save</Button>
                             </form>
                             <span className="text-[10px] mt-1 text-zinc-400">Press escape to cancel, Enter to save</span>
                         </Form>

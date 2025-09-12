@@ -1,11 +1,17 @@
 import { NavigationSideBar } from "@/components/navigation/navigation-sidebar";
 import { ClerkProvider } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const ClassLayout =async ({
     children
 }:{
     children:React.ReactNode;
 })=> {
+     const { userId } = await auth()
+        if (!userId){
+            return redirect("/")
+        }
     return ( 
         <ClerkProvider>
             <div className="h-full ">

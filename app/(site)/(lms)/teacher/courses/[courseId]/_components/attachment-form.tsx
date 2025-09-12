@@ -58,7 +58,7 @@ export const AttachmnetForm = ({ initialData, courseId }: AttachmnetFormProps) =
             await axios.delete(`/api/courses/${courseId}/attachments/${id}`);
             toast.success("Tệp tin đã được xóa")
             router.refresh();
-        } catch (error) {
+        } catch  {
             toast.error("Something went wrong")
         } finally{
             setDeleting(null)

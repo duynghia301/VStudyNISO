@@ -281,8 +281,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
-}
+  }
 
 model Profile {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -476,28 +475,28 @@ model Muxdata {
 }
 
 model UseProgress {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String
-
-  chapterId  String   @db.ObjectId
-  chapter    Chapter  @relation(fields: [chapterId], references: [id])
-
-  isCompleted Boolean @default(false)
-
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  chapterId   String   @db.ObjectId
+  chapter     Chapter  @relation(fields: [chapterId], references: [id])
+  isCompleted Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@unique([userId, chapterId]) 
 }
 
 model Purchase {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String
-
   courseId  String   @db.ObjectId
   course    Course   @relation(fields: [courseId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  @@unique([userId, courseId])  
 }
+
 
 model StripeCustomer {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
