@@ -1,22 +1,20 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
   webpack: (config) => {
     config.externals.push({
       "utf-8-validate": "commonjs utf-8-validate",
-      bufferutil: "commonjs bufferutil"
+      bufferutil: "commonjs bufferutil",
     });
     return config;
   },
   images: {
     remotePatterns: [
-      { hostname: 'utfs.io' }
-    ]
+      { hostname: "utfs.io" },
+    ],
   },
-  
 };
 
-export default nextConfig;
+module.exports = nextConfig;
