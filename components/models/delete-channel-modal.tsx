@@ -78,7 +78,7 @@ export const DeleteChannelModal = () => {
                         </Button>
                         <Button
                             disabled={isLoading}
-                            variant="primary"
+                            variant="destructive"
                             onClick={onClick}
                         >
                             Đồng ý

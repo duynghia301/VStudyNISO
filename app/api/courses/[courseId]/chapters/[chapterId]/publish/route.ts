@@ -4,16 +4,18 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { courseId: string; chapterId: string } }
+  { params }: { params: Promise<{ courseId: string;chapterId: string  }> }
 ) {
     try {
+        const resolvedParams = await params;
+
         const { userId } = await auth();
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
         const courseOwner = await db.course.findUnique({
             where: {
-            id: params.courseId,
+            id: resolvedParams.courseId,
             userId,
             },
         });
@@ -23,13 +25,13 @@ export async function DELETE(
 
         const chapter = await db.chapter.findUnique({
             where: {
-              id: params.chapterId,
-              courseId: params.courseId,
+              id: resolvedParams.chapterId,
+              courseId: resolvedParams.courseId,
             },
         });
         const muxData = await db.muxdata.findUnique({
             where:{
-                chapterId:params.chapterId
+                chapterId:resolvedParams.chapterId
             }
         })
 
@@ -40,8 +42,8 @@ export async function DELETE(
       
         const publicChapter = await db.chapter.update({
             where:{
-                id:params.chapterId,
-                courseId:params.courseId
+                id:resolvedParams.chapterId,
+                courseId:resolvedParams.courseId
             },
             data:{
                 isPublished:true,

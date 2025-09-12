@@ -2,18 +2,15 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-const InviteCodePage = async ({
-  params,
-}: {
-  params: { inviteCode: string };
-}) => {
+export default async function Page({ params }: { params: Promise<{ inviteCode: string }> }) {
+  const resolvedParams = await params;
   const profile = await currentProfile();
 
   if (!profile) {
     redirect("/sign-in");
   }
 
-  const inviteCode = params?.inviteCode;
+  const inviteCode = resolvedParams.inviteCode;
   if (!inviteCode) {
     redirect("/dashboard");
   }
@@ -49,6 +46,4 @@ const InviteCodePage = async ({
   }
 
   redirect("/dashboard");
-};
-
-export default InviteCodePage;
+}

@@ -71,7 +71,7 @@ export const DeleteServerModal = () => {
                         </Button>
                         <Button
                             disabled={isLoading}
-                            variant="primary"
+                            variant="destructive"
                             onClick={onClick}
                         >
                             Đồng ý

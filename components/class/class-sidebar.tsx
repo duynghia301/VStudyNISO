@@ -206,7 +206,7 @@ export const CLassSideBar = async({
                             <ClassMemeber
                             key={member.id}
                             member={member}
-                            server={server}
+                            // server={server}
                             />
 
                         ))}

@@ -4,10 +4,12 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
     req:Request,
-    {params}:{params:{memberId: string}}
+    {params}:{params:Promise<{memberId: string}>}
 
 ) {
     try {
+            const resolvedParams = await params;
+
         const profile = await currentProfile();
         const {searchParams}= new URL(req.url)
 
@@ -19,7 +21,7 @@ export async function DELETE(
         if (!serverId) {
             return new NextResponse("Server ID missing", { status: 400 });
         }
-        if (!params.memberId) {
+        if (!resolvedParams.memberId) {
             return new NextResponse("Member ID missing", { status: 400 });
         }
 
@@ -31,7 +33,7 @@ export async function DELETE(
             data: {
                 members: {
                     deleteMany: {
-                        id: params.memberId,
+                        id: resolvedParams.memberId,
                         profileId: {
                             not: profile.id,
                         
@@ -59,8 +61,9 @@ export async function DELETE(
     
 }
 
-export async function PATCH(req: Request, { params }: { params: { memberId: string } }) {
+export async function PATCH(req: Request, { params }: { params:Promise< { memberId: string } >}) {
     try {
+        const paramsResolved = await params;
         const profile = await currentProfile();
 
         if (!profile) {
@@ -79,7 +82,7 @@ export async function PATCH(req: Request, { params }: { params: { memberId: stri
             return new NextResponse("Role missing", { status: 400 });
         }
 
-        if (!params.memberId) {
+        if (!paramsResolved.memberId) {
             return new NextResponse("Member ID missing", { status: 400 });
         }
 
@@ -92,7 +95,7 @@ export async function PATCH(req: Request, { params }: { params: { memberId: stri
                 members: {
                     update: {
                         where: {
-                            id: params.memberId,
+                            id: paramsResolved.memberId,
                             profileId: {
                                 not: profile.id,
                             },

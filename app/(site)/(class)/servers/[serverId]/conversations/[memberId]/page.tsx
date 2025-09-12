@@ -8,22 +8,20 @@ import { db } from "@/lib/db";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-interface MemberIdPageProps {
-  params: {
-    memberId: string;
-    serverId: string;
-  };
-  searchParams: {
-    video?: boolean;
-  };
-}
-
-const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
-  const profile = await currentProfile();
+// Đúng kiểu Next.js 15: params và searchParams là Promise
+export default async function MemberIdPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ memberId: string; serverId: string }>;
+  searchParams: Promise<{ video?: boolean }>;
+}) {
   const param = await params;
-  const searchParam  = await searchParams;
+  const searchParam = await searchParams;
+  const profile = await currentProfile();
+
   if (!profile) {
-    return RedirectToSignIn;
+    return <RedirectToSignIn />;
   }
 
   const currentMember = await db.member.findFirst({
@@ -37,7 +35,7 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
   });
 
   if (!currentMember) {
-    return redirect("/class");
+    redirect("/class");
   }
 
   const conversation = await getOrCreateConversation(
@@ -46,7 +44,7 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
   );
 
   if (!conversation) {
-    return redirect(`servers/${param.serverId}`);
+    redirect(`servers/${param.serverId}`);
   }
 
   const { memberOne, memberTwo } = conversation;
@@ -95,6 +93,4 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
       )}
     </div>
   );
-};
-
-export default MemberIdPage;
+}

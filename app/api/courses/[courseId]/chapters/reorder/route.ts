@@ -1,12 +1,15 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
+import { promises } from "dns";
 import { NextResponse } from "next/server"
 
 export async function PUT(
     req:Request, 
-    {params} : {params: {courseId:string}}
+    {params} : {params:Promise< {courseId:string}>}
 ) {
     try {
+            const resolvedParams = await params;
+
         const {userId} =await auth();
 
         if (!userId){
@@ -18,7 +21,7 @@ export async function PUT(
 
         const courseOwner = await db.course.findUnique({
             where:{
-                id:params.courseId,
+                id:resolvedParams.courseId,
                 userId: userId,
             }
         });
